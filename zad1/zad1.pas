@@ -1,15 +1,20 @@
 program zad1;
 
-procedure generateRandom(var arr: array of Integer);
+type
+    TIntArray = array of Integer;
+
+procedure generateRandom(min, max, n: Integer; var arr: TIntArray);
 var
     i: Integer;
 begin
+    SetLength(arr, n);
     Randomize;
+
     for i := Low(arr) to High(arr) do
-        arr[i] := Random(101);
+        arr[i] := Random(max - min + 1) + min;
 end;
 
-procedure bubbleSort(var arr: array of Integer);
+procedure bubbleSort(var arr: TIntArray);
 var
     i, j, temp: Integer;
 begin
@@ -24,11 +29,11 @@ begin
 end;
 
 var
-    numbers: array[0..49] of Integer;
+    numbers: TIntArray;
     i: Integer;
 
 begin
-    generateRandom(numbers);
+    generateRandom(20, 50, 10, numbers);
     bubbleSort(numbers);
 
     for i := Low(numbers) to High(numbers) do
