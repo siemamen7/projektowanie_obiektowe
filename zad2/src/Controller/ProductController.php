@@ -18,7 +18,13 @@ final class ProductController extends AbstractController
     #[Route('', methods: 'GET', name: 'getAll')]
     public function getAll(ProductRepository $repo): JsonResponse
     {
-        return $this->json($repo->findAll());
+        return $this->json(array_map(function($product) {
+            return [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+            ];
+        }, $repo->findAll()));
     }
 
     #[Route('/{id}', methods: 'GET', name: 'getById')]
@@ -28,7 +34,11 @@ final class ProductController extends AbstractController
         if (!$product) {
             return $this->json(['error' => 'Product not found'], 404);
         }
-        return $this->json($product);
+        return $this->json([
+            'id' => $product->getId(),
+            'name' => $product->getName(),
+            'price' => $product->getPrice(),
+        ]);
     }
 
     #[Route('', methods: 'POST', name: 'create')]
@@ -48,7 +58,11 @@ final class ProductController extends AbstractController
         $em->persist($product);
         $em->flush();
 
-        return $this->json($product, 201);
+        return $this->json([
+            'id' => $product->getId(),
+            'name' => $product->getName(),
+            'price' => $product->getPrice(),
+        ]);
     }
 
     #[Route('/{id}', methods: ['PUT'])]
@@ -72,7 +86,11 @@ final class ProductController extends AbstractController
 
         $em->flush();
 
-        return $this->json($product);
+        return $this->json([
+            'id' => $product->getId(),
+            'name' => $product->getName(),
+            'price' => $product->getPrice(),
+        ]);
     }
     
     #[Route('/{id}', methods: ['DELETE'])]
