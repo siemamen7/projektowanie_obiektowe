@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\Product;
+use App\Repository\CategoryRepository;
 
 #[Route('/products')]
 final class ProductController extends AbstractController
@@ -23,6 +24,7 @@ final class ProductController extends AbstractController
                 'id' => $product->getId(),
                 'name' => $product->getName(),
                 'price' => $product->getPrice(),
+                'category_id' => $product->getCategory()?->getId(),
             ];
         }, $repo->findAll()));
     }
@@ -38,12 +40,12 @@ final class ProductController extends AbstractController
             'id' => $product->getId(),
             'name' => $product->getName(),
             'price' => $product->getPrice(),
+            'category_id' => $product->getCategory()?->getId(),
         ]);
     }
 
     #[Route('', methods: 'POST', name: 'create')]
-    #[Route('', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $em): JsonResponse
+    public function create(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepo): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -55,6 +57,14 @@ final class ProductController extends AbstractController
         $product->setName($data['name']);
         $product->setPrice($data['price']);
 
+        if (isset($data['category_id'])) {
+            $category = $categoryRepo->find($data['category_id']);
+            if (!$category) {
+                return $this->json(['error' => 'Category not found'], 404);
+            }
+            $product->setCategory($category);
+        }
+
         $em->persist($product);
         $em->flush();
 
@@ -62,11 +72,12 @@ final class ProductController extends AbstractController
             'id' => $product->getId(),
             'name' => $product->getName(),
             'price' => $product->getPrice(),
+            'category_id' => $product->getCategory()?->getId(),
         ]);
     }
 
     #[Route('/{id}', methods: ['PUT'])]
-    public function update(int $id, Request $request, ProductRepository $repo, EntityManagerInterface $em): JsonResponse
+    public function update(int $id, Request $request, ProductRepository $repo, EntityManagerInterface $em, CategoryRepository $categoryRepo): JsonResponse
     {
         $product = $repo->find($id);
 
@@ -84,12 +95,21 @@ final class ProductController extends AbstractController
             $product->setPrice($data['price']);
         }
 
+        if (isset($data['category_id'])) {
+            $category = $categoryRepo->find($data['category_id']);
+            if (!$category) {
+                return $this->json(['error' => 'Category not found'], 404);
+            }
+            $product->setCategory($category);
+        }
+
         $em->flush();
 
         return $this->json([
             'id' => $product->getId(),
             'name' => $product->getName(),
             'price' => $product->getPrice(),
+            'category_id' => $product->getCategory()?->getId(),
         ]);
     }
     
