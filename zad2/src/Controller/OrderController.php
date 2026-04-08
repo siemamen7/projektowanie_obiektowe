@@ -29,9 +29,9 @@ final class OrderController extends AbstractController
     }
 
     #[Route('/{id}', methods: 'GET', name: 'getById')]
-    public function getById(OrderRepository $repo, int $id): JsonResponse
+    public function getById(OrderRepository $repo, string $id): JsonResponse
     {
-        $order = $repo->find($id);
+        $order = $repo->find((int) $id);
         if (!$order) {
             return $this->json(['error' => 'Order not found'], 404);
         }
@@ -68,9 +68,9 @@ final class OrderController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['PUT'])]
-    public function update(int $id, Request $request, OrderRepository $repo, EntityManagerInterface $em): JsonResponse
+    public function update(string $id, Request $request, OrderRepository $repo, EntityManagerInterface $em): JsonResponse
     {
-        $order = $repo->find($id);
+        $order = $repo->find((int) $id);
 
         if (!$order) {
             return $this->json(['error' => 'Order not found'], 404);
@@ -93,9 +93,9 @@ final class OrderController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['DELETE'])]
-    public function delete(int $id, OrderRepository $repo, EntityManagerInterface $em): JsonResponse
+    public function delete(string $id, OrderRepository $repo, EntityManagerInterface $em): JsonResponse
     {
-        $order = $repo->find($id);
+        $order = $repo->find((int) $id);
         if (!$order) {
             return $this->json(['error' => 'Order not found'], 404);
         }
@@ -104,5 +104,13 @@ final class OrderController extends AbstractController
         $em->flush();
 
         return $this->json(['message' => 'Order deleted']);
+    }
+
+    #[Route('/view', name: 'order_view')]
+    public function view(OrderRepository $repo)
+    {
+        return $this->render('order/index.html.twig', [
+            'orders' => $repo->findAll(),
+        ]);
     }
 }

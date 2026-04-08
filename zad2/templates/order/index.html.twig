@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders</title>
+</head>
+<body>
+    <h1>Orders</h1>
+    <a href="{{ path('product_view') }}">Products</a> |
+    <a href="{{ path('category_view') }}">Categories</a>
+    <br><br>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Products</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+            <td>{{ order.total }}</td>
+            <td>{{ order.products|length }} products</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

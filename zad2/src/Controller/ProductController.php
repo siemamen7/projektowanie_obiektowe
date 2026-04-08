@@ -16,6 +16,11 @@ use App\Repository\CategoryRepository;
 #[Route('/products')]
 final class ProductController extends AbstractController
 {
+    #[Route('/', name: 'home')]
+    public function home()
+    {
+        return $this->render('home.html.twig');
+    }
     #[Route('', methods: 'GET', name: 'getAll')]
     public function getAll(ProductRepository $repo): JsonResponse
     {
@@ -29,10 +34,10 @@ final class ProductController extends AbstractController
         }, $repo->findAll()));
     }
 
-    #[Route('/{id}', methods: 'GET', name: 'getById')]
-    public function getById(ProductRepository $repo, int $id): JsonResponse
+    #[Route('/{id}', methods: 'GET', name: 'getById', requirements: ['id' => '\d+'])]
+    public function getById(ProductRepository $repo, string $id): JsonResponse
     {
-        $product = $repo->find($id);
+        $product = $repo->find((int) $id);
         if (!$product) {
             return $this->json(['error' => 'Product not found'], 404);
         }
@@ -77,9 +82,9 @@ final class ProductController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['PUT'])]
-    public function update(int $id, Request $request, ProductRepository $repo, EntityManagerInterface $em, CategoryRepository $categoryRepo): JsonResponse
+    public function update(string $id, Request $request, ProductRepository $repo, EntityManagerInterface $em, CategoryRepository $categoryRepo): JsonResponse
     {
-        $product = $repo->find($id);
+        $product = $repo->find((int) $id);
 
         if (!$product) {
             return $this->json(['error' => 'Product not found'], 404);
@@ -114,9 +119,9 @@ final class ProductController extends AbstractController
     }
     
     #[Route('/{id}', methods: ['DELETE'])]
-    public function delete(int $id, ProductRepository $repo, EntityManagerInterface $em): JsonResponse
+    public function delete(string $id, ProductRepository $repo, EntityManagerInterface $em): JsonResponse
     {
-        $product = $repo->find($id);
+        $product = $repo->find((int) $id);
 
         if (!$product) {
             return $this->json(['error' => 'Product not found'], 404);
@@ -126,5 +131,13 @@ final class ProductController extends AbstractController
         $em->flush();
 
         return $this->json(['message' => 'Product deleted']);
+    }
+
+    #[Route('/view', name: 'product_view')]
+    public function view(ProductRepository $repo)
+    {
+        return $this->render('product/index.html.twig', [
+            'products' => $repo->findAll(),
+        ]);
     }
 }

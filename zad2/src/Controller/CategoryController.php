@@ -28,9 +28,9 @@ final class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', methods: 'GET', name: 'getById')]
-    public function getById(CategoryRepository $repo, int $id): JsonResponse
+    public function getById(CategoryRepository $repo, string $id): JsonResponse
     {
-        $category = $repo->find($id);
+        $category = $repo->find((int) $id);
         if (!$category) {
             return $this->json(['error' => 'Category not found'], 404);
         }
@@ -64,9 +64,9 @@ final class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['PUT'])]
-    public function update(int $id, Request $request, CategoryRepository $repo, EntityManagerInterface $em): JsonResponse
+    public function update(string $id, Request $request, CategoryRepository $repo, EntityManagerInterface $em): JsonResponse
     {
-        $category = $repo->find($id);
+        $category = $repo->find((int) $id);
 
         if (!$category) {
             return $this->json(['error' => 'Category not found'], 404);
@@ -88,9 +88,9 @@ final class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['DELETE'])]
-    public function delete(int $id, CategoryRepository $repo, EntityManagerInterface $em): JsonResponse
+    public function delete(string $id, CategoryRepository $repo, EntityManagerInterface $em): JsonResponse
     {
-        $category = $repo->find($id);
+        $category = $repo->find((int) $id);
         if (!$category) {
             return $this->json(['error' => 'Category not found'], 404);
         }
@@ -99,5 +99,13 @@ final class CategoryController extends AbstractController
         $em->flush();
 
         return $this->json(['message' => 'Category deleted']);
+    }
+
+    #[Route('/view', name: 'category_view')]
+    public function view(CategoryRepository $repo)
+    {
+        return $this->render('category/index.html.twig', [
+            'categories' => $repo->findAll(),
+        ]);
     }
 }
