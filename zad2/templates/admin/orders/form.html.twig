@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ order ? 'Edit Order' : 'New Order' }}</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ order ? 'Edit Order' : 'New Order' }}</h1>
+        <p><a href="{{ path('admin_orders') }}" class="admin-link">Back to Orders</a></p>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="datetime-local" id="date" name="date" value="{{ order ? order.date|date('Y-m-d\\TH:i') : '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="product_ids">Products:</label>
+                <select id="product_ids" name="product_ids[]" multiple size="6">
+                    {% for product in products %}
+                        <option value="{{ product.id }}" {% if order and product in order.products %}selected{% endif %}>
+                            {{ product.name }} - ${{ product.price }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="total">Total Amount:</label>
+                <input type="number" id="total" name="total" step="0.01" value="{{ order ? order.total : '' }}" required>
+            </div>
+            
+            <button type="submit" class="btn-primary">{{ order ? 'Update' : 'Create' }}</button>
+            <a href="{{ path('admin_orders') }}" class="btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

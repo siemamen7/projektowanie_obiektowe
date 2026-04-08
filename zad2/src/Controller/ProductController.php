@@ -16,11 +16,6 @@ use App\Repository\CategoryRepository;
 #[Route('/products')]
 final class ProductController extends AbstractController
 {
-    #[Route('/', name: 'home')]
-    public function home()
-    {
-        return $this->render('home.html.twig');
-    }
     #[Route('', methods: 'GET', name: 'getAll')]
     public function getAll(ProductRepository $repo): JsonResponse
     {

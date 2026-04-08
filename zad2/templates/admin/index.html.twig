@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel</h1>
+        <div class="menu">
+            <a href="{{ path('admin_products') }}">Manage Products</a>
+            <a href="{{ path('admin_categories') }}">Manage Categories</a>
+            <a href="{{ path('admin_orders') }}">Manage Orders</a>
+            <a href="{{ path('product_view') }}">View Site</a>
+        </div>
+    </div>
+</body>
+</html>
