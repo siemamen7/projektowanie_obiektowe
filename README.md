@@ -1,3 +1,5 @@
+# Zadanie 1
+
 3.0 Procedura do generowania 50 losowych liczb od 0 do 100
 
 commit: https://github.com/siemamen7/programowanie_obiektowe/commit/3b9eea3d3e2c66bbe17f21592f35e7ed5af1ce00
@@ -22,3 +24,27 @@ commit: https://github.com/siemamen7/programowanie_obiektowe/commit/2829f39f90f1
 5.0 Skrypt w bashu do uruchamiania aplikacji w Pascalu via docker
 
 commit: https://github.com/siemamen7/programowanie_obiektowe/commit/39fef4901034e547fe9e15df57ffe7fd19ea7d84
+
+# Zadanie 2
+
+3.0 Należy stworzyć jeden model z kontrolerem z produktami, zgodnie z
+CRUD (JSON)
+
+commit: https://github.com/siemamen7/programowanie_obiektowe/commit/7dd9ecfc7a3d74720edb1efbf82e9db84dbd621f
+
+3.5 Należy stworzyć skrypty do testów endpointów via curl (JSON)
+
+commit: https://github.com/siemamen7/programowanie_obiektowe/commit/7dd9ecfc7a3d74720edb1efbf82e9db84dbd621f
+
+
+4.0 Należy stworzyć dwa dodatkowe kontrolery wraz z modelami  (JSON)
+
+commit: https://github.com/siemamen7/programowanie_obiektowe/commit/33a5ba79d9d9d5bbfc97394afed78b01240b82a4
+
+4.5 Należy stworzyć widoki do wszystkich kontrolerów
+
+commit: https://github.com/siemamen7/programowanie_obiektowe/commit/a617719489b01f832c086b84755dc827d48e7b53
+
+5.0 Stworzenie panelu administracyjnego
+
+commit: https://github.com/siemamen7/programowanie_obiektowe/commit/a617719489b01f832c086b84755dc827d48e7b53
