@@ -50,3 +50,5 @@ commit: https://github.com/siemamen7/programowanie_obiektowe/commit/a617719489b0
 commit: https://github.com/siemamen7/programowanie_obiektowe/commit/a617719489b01f832c086b84755dc827d48e7b53
 
 final image: https://hub.docker.com/repository/docker/szczuras7/projobj2/general
+
+wideo: https://github.com/siemamen7/programowanie_obiektowe/blob/main/zad2/Nagrywanie%20ekranu%202026-04-14%20163533%20(720p).mp4
