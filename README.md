@@ -48,3 +48,5 @@ commit: https://github.com/siemamen7/programowanie_obiektowe/commit/a617719489b0
 5.0 Stworzenie panelu administracyjnego
 
 commit: https://github.com/siemamen7/programowanie_obiektowe/commit/a617719489b01f832c086b84755dc827d48e7b53
+
+final image: https://hub.docker.com/repository/docker/szczuras7/projobj2/general
